@@ -8,7 +8,7 @@ namespace CooperativaMercado.Repository.Dao
     public class PuestoDAO : IPuesto
     {
         // no se olviden de cambiar su cadena de conexion
-        // aquneue ahora no es nesesario :D
+        // aunque ahora no es nesesario :D
         private readonly string connectionString;
 
         public PuestoDAO()
