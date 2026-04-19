@@ -39,17 +39,39 @@ namespace CooperativaMercado.Repository.Dao
 
         public int Asociar(int idPuesto, int idSocio)
         {
-            throw new NotImplementedException();
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            { 
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("sp_AsociarPuesto", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdPuesto", idPuesto);
+                cmd.Parameters.AddWithValue("@IdSocio", idSocio);
+                return cmd.ExecuteNonQuery();
+            }
         }
 
         public int Desactivar(int idPuesto)
         {
-            throw new NotImplementedException();
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("sp_DesasociarPuesto", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdPuesto", idPuesto);
+                return cmd.ExecuteNonQuery();
+            }
         }
 
         public int Desasociar(int idPuesto)
         {
-            throw new NotImplementedException();
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("sp_DesacativarPuesto", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdPuesto", idPuesto);
+                return cmd.ExecuteNonQuery();
+            }
         }
 
         public int Registrar(Puesto puesto)
