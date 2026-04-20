@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 //Servicios DAO
 builder.Services.AddScoped<PuestoDAO>();
+builder.Services.AddScoped<DeudaDAO>();
 
 
 var app = builder.Build();

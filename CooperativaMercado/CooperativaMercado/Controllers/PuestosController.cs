@@ -6,7 +6,7 @@ namespace CooperativaMercado.Controllers
 {
     [ApiController]
     [Route("api/puestos")]
-    public class PuestosController : Controller
+    public class PuestosController : ControllerBase
     {
         private readonly PuestoDAO puestoDAO;
 
