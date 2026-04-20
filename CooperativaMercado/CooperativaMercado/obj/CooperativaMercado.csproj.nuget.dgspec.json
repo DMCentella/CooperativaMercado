@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DesarrolloServiciosWeb\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj": {}
+    "D:\\ProyectoSW\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj": {}
   },
   "projects": {
-    "D:\\DesarrolloServiciosWeb\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj": {
+    "D:\\ProyectoSW\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DesarrolloServiciosWeb\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj",
+        "projectUniqueName": "D:\\ProyectoSW\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj",
         "projectName": "CooperativaMercado",
-        "projectPath": "D:\\DesarrolloServiciosWeb\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj",
-        "packagesPath": "C:\\Users\\josel\\.nuget\\packages\\",
-        "outputPath": "D:\\DesarrolloServiciosWeb\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado\\obj\\",
+        "projectPath": "D:\\ProyectoSW\\CooperativaMercado\\CooperativaMercado\\CooperativaMercado.csproj",
+        "packagesPath": "C:\\Users\\tassa\\.nuget\\packages\\",
+        "outputPath": "D:\\ProyectoSW\\CooperativaMercado\\CooperativaMercado\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\josel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tassa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -78,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
