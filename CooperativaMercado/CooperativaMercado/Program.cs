@@ -10,10 +10,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//Servicios DAO
-builder.Services.AddScoped<PuestoDAO>();
-builder.Services.AddScoped<DeudaDAO>();
-
+//Servicios DAO;
+builder.Services.AddScoped<SocioDao>();
+builder.Services.AddScoped<PuestoDao>();
+builder.Services.AddScoped<DeudaDao>();
+builder.Services.AddScoped<PagoDao>();
+builder.Services.AddScoped<IngresoDao>();
+builder.Services.AddScoped<TipoDeudaDao>();
 
 var app = builder.Build();
 

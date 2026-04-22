@@ -4,6 +4,9 @@ namespace CooperativaMercado.Repository.Interfaces
 {
     public interface IPago
     {
-        int RegistrarPago(Pago pago);
+        void RegistrarPago(int idDeuda, decimal monto, string metodoPago);
+
+        List<Pago> ListarPagos();
+        List<Pago> ObtenerPorPuesto(int idPuesto);
     }
 }

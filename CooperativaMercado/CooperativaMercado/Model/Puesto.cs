@@ -11,11 +11,11 @@
         public decimal MontoAlquiler { get; set; }
 
         public int? IdSocio { get; set; }
-        public Socio Socio { get; set; }
+        public Socio? Socio { get; set; }
 
         public bool Activo { get; set; }
 
-        public ICollection<Deuda> Deudas { get; set; }
+        public ICollection<Deuda>? Deudas { get; set; }
 
 
 

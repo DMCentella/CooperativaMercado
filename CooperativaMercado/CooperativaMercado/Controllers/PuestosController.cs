@@ -5,68 +5,48 @@ using Microsoft.AspNetCore.Mvc;
 namespace CooperativaMercado.Controllers
 {
     [ApiController]
-    [Route("api/puestos")]
+    [Route("api/[controller]")]
     public class PuestosController : ControllerBase
     {
-        private readonly PuestoDAO puestoDAO;
+        private readonly PuestoDao _puestoDao;
 
-        public PuestosController(PuestoDAO puestoDAO)
+        public PuestosController(PuestoDao puestoDao)
         {
-            this.puestoDAO = puestoDAO;
+            _puestoDao = puestoDao;
         }
 
-        [HttpPost]
-        public ActionResult Registrar([FromBody] Puesto puesto)
+        [HttpGet("getPuestos")]
+        public ActionResult getPuestos()
         {
-            if (puesto == null)
-                return BadRequest();
-
-            var resultado = puestoDAO.Registrar(puesto);
-            if (resultado > 0)
-                return Created("", puesto);
-
-            return BadRequest();
+            return Ok(_puestoDao.Listar());
         }
 
-        [HttpPut("{id:int}")]
-        public ActionResult Actualizar(int id, [FromBody] Puesto puesto)
+        [HttpPost("savePuesto")]
+        public ActionResult savePuesto(Puesto puesto)
         {
-            var resultado = puestoDAO.Actualizar(id, puesto);
-            if (resultado == 0)
-                return NotFound();
-
-            return NoContent();
+            _puestoDao.Registrar(puesto);
+            return Created("", puesto);
         }
 
-        [HttpPut("{idPuesto:int}/asociar/{idSocio:int}")]
-        public ActionResult Asociar(int idPuesto, int idSocio)
+        [HttpPut("updatePuesto")]
+        public ActionResult updatePuesto(Puesto puesto)
         {
-            var resultado = puestoDAO.Asociar(idPuesto, idSocio);
-            if (resultado == 0)
-                return NotFound();
-
-            return NoContent();
+            _puestoDao.Actualizar(puesto);
+            return Ok(puesto);
         }
 
-        [HttpPut("{idPuesto:int}/desasociar")]
-        public ActionResult Desasociar(int idPuesto)
+        [HttpPut("asignar")]
+        public ActionResult asignar(int idPuesto, int idSocio)
         {
-            var resultado = puestoDAO.Desasociar(idPuesto);
-            if (resultado == 0)
-                return NotFound();
-
-            return NoContent();
+            _puestoDao.AsignarSocio(idPuesto, idSocio);
+            return Ok();
         }
 
-        [HttpDelete("{idPuesto:int}")]
-        public ActionResult Desactivar(int idPuesto)
+        [HttpPut("desasignar")]
+        public ActionResult desasignar(int idPuesto)
         {
-            var resultado = puestoDAO.Desactivar(idPuesto);
-            if (resultado == 0)
-                return NotFound();
-
-            return NoContent();
+            _puestoDao.DesasignarSocio(idPuesto);
+            return Ok();
         }
-
     }
 }

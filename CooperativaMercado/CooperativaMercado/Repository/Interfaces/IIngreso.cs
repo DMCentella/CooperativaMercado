@@ -4,6 +4,12 @@ namespace CooperativaMercado.Repository.Interfaces
 {
     public interface IIngreso
     {
-        int RegistrarIngreso(IngresoDiario ingresoDiario);
+        void RegistrarIngreso(IngresoDiario ingreso);
+
+        List<IngresoDiario> Listar();
+        List<IngresoDiario> ObtenerPorPuesto(int idPuesto);
+
+
     }
 }
+

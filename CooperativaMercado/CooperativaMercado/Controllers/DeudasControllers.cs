@@ -5,51 +5,55 @@ using Microsoft.AspNetCore.Mvc;
 namespace CooperativaMercado.Controllers
 {
     [ApiController]
-    [Route("api/deudas")]
-    public class DeudasControllers : ControllerBase
+    [Route("api/[controller]")]
+    public class DeudasController : ControllerBase
     {
-        private readonly DeudaDAO deudaDAO;
+        private readonly DeudaDao _deudaDao;
 
-        public DeudasControllers(DeudaDAO deudaDAO) 
+        public DeudasController(DeudaDao deudaDao)
         {
-            this.deudaDAO = deudaDAO;
+            _deudaDao = deudaDao;
         }
 
-        [HttpPost]
-        public ActionResult Create([FromBody] Deuda deuda)
+        [HttpGet("getDeudas")]
+        public ActionResult getDeudas()
         {
-            if (deuda == null)
-                return BadRequest();
-
-            var resultado = deudaDAO.Crear(deuda);
-            if (resultado > 0)
-                return Created("", deuda);
-
-            return BadRequest();
+            return Ok(_deudaDao.Listar());
         }
 
-        [HttpPut]
-        public ActionResult Actualizar(int idDeuda, Deuda deuda)
+        [HttpGet("pendientes")]
+        public ActionResult getPendientes()
         {
-            if (deuda == null)
-                return BadRequest();
-
-            var resultado = deudaDAO.Actualizar(idDeuda, deuda);
-            if (resultado == 0)
-                return NotFound();
-
-            return NoContent();
+            return Ok(_deudaDao.ObtenerPendientes());
         }
 
-        [HttpPost("generar-alquiler")] // nose si este esta bien revisen
-        public ActionResult GenerarAlquilerMensual(int mes, int anio)
+        [HttpPost("saveDeuda")]
+        public ActionResult saveDeuda(Deuda deuda)
         {
-            if (mes < 1 || mes > 12)
-                return BadRequest(new { mensaje = "Mes invalido" });
-
-            deudaDAO.GenerarAlquilerMensual(mes, anio);
-            return Ok(new { mensaje = "Alquileres generados correctamente" });
+            _deudaDao.Registrar(deuda);
+            return Created("", deuda);
         }
+
+        [HttpPost("generarAlquiler")]
+        public ActionResult generar(int mes, int anio)
+        {
+            _deudaDao.GenerarAlquilerMensual(mes, anio);
+            return Ok();
+        }
+        [HttpGet("reporteDeudasPendientes")]
+        public ActionResult reporteDeudasPendientes()
+        {
+            return Ok(_deudaDao.ReportePendientes());
+        }
+
+        [HttpGet("reporteDeudasPagadas")]
+        public ActionResult reporteDeudasPagadas()
+        {
+            return Ok(_deudaDao.ReportePagadas());
+        }
+
 
     }
+
+
 }

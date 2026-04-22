@@ -4,10 +4,13 @@ namespace CooperativaMercado.Repository.Interfaces
 {
     public interface IPuesto
     {
-        int Registrar(Puesto puesto);
-        int Actualizar(int id, Puesto puesto);
-        int Asociar(int idPuesto, int idSocio);
-        int Desasociar(int idPuesto);
-        int Desactivar(int idPuesto);
+        List<Puesto> Listar();
+        Puesto ObtenerPorId(int id);
+
+        void Registrar(Puesto puesto);
+        void Actualizar(Puesto puesto);
+
+        void AsignarSocio(int idPuesto, int idSocio);
+        void DesasignarSocio(int idPuesto);
     }
 }

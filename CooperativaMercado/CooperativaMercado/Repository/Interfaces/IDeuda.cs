@@ -4,8 +4,14 @@ namespace CooperativaMercado.Repository.Interfaces
 {
     public interface IDeuda
     {
-        int Crear(Deuda deuda);
-        int Actualizar(int idDeuda, Deuda deuda);
-        int GenerarAlquilerMensual(int mes, int anio);
+        List<Deuda> Listar();
+        Deuda ObtenerPorId(int id);
+
+        List<Deuda> ObtenerPorPuesto(int idPuesto);
+        List<Deuda> ObtenerPendientes();
+
+        void Registrar(Deuda deuda);
+
+        void GenerarAlquilerMensual(int mes, int anio);
     }
 }

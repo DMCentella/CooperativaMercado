@@ -8,7 +8,7 @@
         public string Telefono { get; set; }
         public bool Activo { get; set; }
 
-        public ICollection<Puesto> Puestos { get; set; }
+        public ICollection<Puesto>? Puestos { get; set; }
 
     }
 }

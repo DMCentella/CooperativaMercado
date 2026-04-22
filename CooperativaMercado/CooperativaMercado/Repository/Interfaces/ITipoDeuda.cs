@@ -4,8 +4,13 @@ namespace CooperativaMercado.Repository.Interfaces
 {
     public interface ITipoDeuda
     {
-        int Registrar(TipoDeuda tipo);
-        int Actualizar(int idTipoDeuda, TipoDeuda tipo);
-        int Desactivar(int idTipoDeuda);
+
+        List<TipoDeuda> Listar();
+        TipoDeuda ObtenerPorId(int id);
+
+        void Registrar(TipoDeuda tipo);
+        void Actualizar(TipoDeuda tipo);
+
+        void Desactivar(int id);
     }
 }
