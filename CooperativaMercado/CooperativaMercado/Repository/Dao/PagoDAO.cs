@@ -67,7 +67,7 @@ namespace CooperativaMercado.Repository.Dao
             return lista;
         }
 
-        // 🔹 PAGOS POR PUESTO (simplificado)
+        // 🔹 PAGOS POR PUESTO 
         public List<Pago> ObtenerPorPuesto(int idPuesto)
         {
             List<Pago> lista = new List<Pago>();
@@ -76,27 +76,23 @@ namespace CooperativaMercado.Repository.Dao
             {
                 cn.Open();
 
-                // reutilizamos el SP de reporte y filtramos en código
-                SqlCommand cmd = new SqlCommand("sp_ReportePagosDetalle", cn);
+                SqlCommand cmd = new SqlCommand("sp_ReportePagosPorPuesto", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@IdPuesto", idPuesto);
 
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
                 {
-                    int puestoId = dr.GetInt32(5); // columna Puesto (ojo orden del SP)
-
-                    if (puestoId == idPuesto)
+                    lista.Add(new Pago()
                     {
-                        lista.Add(new Pago()
-                        {
-                            IdPago = dr.GetInt32(0),
-                            NumeroRecibo = dr.GetString(1),
-                            Fecha = dr.GetDateTime(2),
-                            Monto = dr.GetDecimal(3),
-                            MetodoPago = dr.GetString(4)
-                        });
-                    }
+                        IdPago = dr.GetInt32(0),
+                        NumeroRecibo = dr.GetString(1),
+                        Fecha = dr.GetDateTime(2),
+                        Monto = dr.GetDecimal(3),
+                        MetodoPago = dr.GetString(4)
+                    });
                 }
             }
 
