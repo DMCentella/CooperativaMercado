@@ -233,13 +233,13 @@ BEGIN
 
     IF @Numero IS NULL OR LTRIM(RTRIM(@Numero)) = ''
     BEGIN
-        RAISERROR('El n˙mero de puesto es obligatorio.', 16, 1);
+        RAISERROR('El n√∫mero de puesto es obligatorio.', 16, 1);
         RETURN;
     END
 
     IF EXISTS (SELECT 1 FROM Puesto WHERE Numero = @Numero)
     BEGIN
-        RAISERROR('Ya existe un puesto con ese n˙mero.', 16, 1);
+        RAISERROR('Ya existe un puesto con ese n√∫mero.', 16, 1);
         RETURN;
     END
 
@@ -251,7 +251,7 @@ BEGIN
 
     IF @IdSocio IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Socio WHERE IdSocio = @IdSocio AND Activo = 1)
     BEGIN
-        RAISERROR('El socio asignado no existe o est· inactivo.', 16, 1);
+        RAISERROR('El socio asignado no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
@@ -280,7 +280,7 @@ BEGIN
 
     IF @Numero IS NULL OR LTRIM(RTRIM(@Numero)) = ''
     BEGIN
-        RAISERROR('El n˙mero de puesto es obligatorio.', 16, 1);
+        RAISERROR('El n√∫mero de puesto es obligatorio.', 16, 1);
         RETURN;
     END
 
@@ -289,7 +289,7 @@ BEGIN
         WHERE Numero = @Numero AND IdPuesto <> @IdPuesto
     )
     BEGIN
-        RAISERROR('Ya existe otro puesto con ese n˙mero.', 16, 1);
+        RAISERROR('Ya existe otro puesto con ese n√∫mero.', 16, 1);
         RETURN;
     END
 
@@ -301,7 +301,7 @@ BEGIN
 
     IF @IdSocio IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Socio WHERE IdSocio = @IdSocio AND Activo = 1)
     BEGIN
-        RAISERROR('El socio asignado no existe o est· inactivo.', 16, 1);
+        RAISERROR('El socio asignado no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
@@ -331,7 +331,7 @@ BEGIN
 
     IF NOT EXISTS (SELECT 1 FROM Socio WHERE IdSocio = @IdSocio AND Activo = 1)
     BEGIN
-        RAISERROR('El socio no existe o est· inactivo.', 16, 1);
+        RAISERROR('El socio no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
@@ -523,13 +523,13 @@ BEGIN
 
     IF NOT EXISTS (SELECT 1 FROM Puesto WHERE IdPuesto = @IdPuesto AND Activo = 1)
     BEGIN
-        RAISERROR('El puesto no existe o est· inactivo.', 16, 1);
+        RAISERROR('El puesto no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
     IF NOT EXISTS (SELECT 1 FROM TipoDeuda WHERE IdTipoDeuda = @IdTipoDeuda AND Activo = 1)
     BEGIN
-        RAISERROR('El tipo de deuda no existe o est· inactivo.', 16, 1);
+        RAISERROR('El tipo de deuda no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
@@ -547,7 +547,7 @@ BEGIN
 
     IF @Anio < 2020
     BEGIN
-        RAISERROR('El aÒo no es v·lido.', 16, 1);
+        RAISERROR('El a√±o no es v√°lido.', 16, 1);
         RETURN;
     END
 
@@ -593,7 +593,7 @@ BEGIN
 
     IF @Estado NOT IN ('Pendiente','Pagado')
     BEGIN
-        RAISERROR('Estado no v·lido.', 16, 1);
+        RAISERROR('Estado no v√°lido.', 16, 1);
         RETURN;
     END
 
@@ -712,7 +712,7 @@ BEGIN
 
     IF @Estado = 'Pagado'
     BEGIN
-        RAISERROR('La deuda ya est· pagada.', 16, 1);
+        RAISERROR('La deuda ya est√° pagada.', 16, 1);
         RETURN;
     END
 
@@ -750,6 +750,28 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE sp_ReportePagosPorPuesto
+    @IdPuesto INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        pa.IdPago,
+        pa.NumeroRecibo,
+        pa.Fecha,
+        pa.Monto,
+        pa.MetodoPago,
+        d.IdPuesto
+    FROM Pago pa
+    INNER JOIN Deuda d ON pa.IdDeuda = d.IdDeuda
+    WHERE d.IdPuesto = @IdPuesto
+    ORDER BY pa.Fecha DESC;
+END
+GO
+
+    
+
 /* =========================================================
    INGRESO DIARIO
    ========================================================= */
@@ -770,7 +792,7 @@ BEGIN
           AND Activo = 1
     )
     BEGIN
-        RAISERROR('El puesto no existe o est· inactivo.', 16, 1);
+        RAISERROR('El puesto no existe o est√° inactivo.', 16, 1);
         RETURN;
     END
 
@@ -965,6 +987,27 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE sp_ReportePagosDetalle
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        pa.IdPago,
+        pa.NumeroRecibo,
+        pa.Fecha,
+        pa.Monto,
+        pa.MetodoPago,
+        d.IdPuesto,
+        p.Numero AS Puesto,
+        td.Nombre AS TipoDeuda
+    FROM Pago pa
+    INNER JOIN Deuda d ON pa.IdDeuda = d.IdDeuda
+    INNER JOIN Puesto p ON d.IdPuesto = p.IdPuesto
+    INNER JOIN TipoDeuda td ON d.IdTipoDeuda = td.IdTipoDeuda
+    ORDER BY pa.Fecha DESC;
+END
+GO        
 /* =========================================================
    DATOS INICIALES
    ========================================================= */
@@ -980,42 +1023,42 @@ GO
 
 INSERT INTO Socio (Nombre, DNI, Telefono) VALUES
 ('Thiago Quispe','70123456','912345678'),
-('Valeria Huam·n','70234567','923456789'),
+('Valeria Huam√°n','70234567','923456789'),
 ('Bruno Tacuri','70345678','934567890'),
 ('Camila Chura','70456789','945678901'),
 ('Mateo Mamani','70567890','956789012'),
 ('Alondra Choque','70678901','967890123'),
-('Sebasti·n Pari','70789012','978901234'),
+('Sebasti√°n Pari','70789012','978901234'),
 ('Luciana Condori','70890123','989012345'),
 ('Gael Huanca','70901234','990123456'),
 ('Antonella Yupanqui','71012345','901234567'),
 ('Ian Apaza','71123456','912345679'),
 ('Danna Vilca','71234567','923456780'),
 ('Axel Cusi','71345678','934567891'),
-('MÌa Calla','71456789','945678902'),
+('M√≠a Calla','71456789','945678902'),
 ('Emiliano Suca','71567890','956789013'),
 ('Renata Tito','71678901','967890124'),
 ('Santiago Quenta','71789012','978901235'),
 ('Valentina Lazo','71890123','989012346'),
-('Nicol·s Poma','71901234','990123457'),
+('Nicol√°s Poma','71901234','990123457'),
 ('Fernanda Saire','72012345','901234568');
 
 GO
 INSERT INTO Puesto (Numero, Metraje, Ubicacion, Giro, MontoAlquiler, IdSocio) VALUES
 ('P1',10,'Zona Norte','Comida',250,1),
 ('P2',12,'Zona Norte','Ropa',260,2),
-('P3',8,'Zona Este','TecnologÌa',300,3),
+('P3',8,'Zona Este','Tecnolog√≠a',300,3),
 ('P4',15,'Zona Sur','Carnes',320,4),
 ('P5',9,'Zona Oeste','Frutas',200,5),
 ('P6',11,'Centro','Verduras',210,6),
-('P7',14,'Centro','L·cteos',280,7),
+('P7',14,'Centro','L√°cteos',280,7),
 ('P8',10,'Centro','Bebidas',190,8),
-('P9',13,'Centro','PanaderÌa',230,9),
+('P9',13,'Centro','Panader√≠a',230,9),
 ('P10',7,'Centro','Juguetes',180,10),
 ('P11',10,'Zona Norte','Zapatos',240,11),
 ('P12',12,'Zona Norte','Accesorios',250,12),
 ('P13',8,'Zona Este','Celulares',310,13),
-('P14',15,'Zona Sur','ElectrÛnica',350,14),
+('P14',15,'Zona Sur','Electr√≥nica',350,14),
 ('P15',9,'Zona Oeste','Hierbas',190,15),
 ('P16',11,'Centro','Pescados',270,16),
 ('P17',14,'Centro','Abarrotes',260,17),
